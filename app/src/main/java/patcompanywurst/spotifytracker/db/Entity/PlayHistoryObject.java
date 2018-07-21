@@ -1,19 +1,35 @@
 package patcompanywurst.spotifytracker.db.Entity;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.Relation;
+
+import java.util.List;
 
 @Entity
 public class PlayHistoryObject {
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = true)
     private long playHistoryObjectId;
 
-    //private Track track;
+    private long trackId;
+
+    @ColumnInfo(name = "object_context_type")
     private String objectContextType; // artist, playlist,album
 
-    public PlayHistoryObject(long playHistoryObjectId, String objectContextType) {
-        this.playHistoryObjectId = playHistoryObjectId;
+    public PlayHistoryObject(String objectContextType, long trackId) {
         this.objectContextType = objectContextType;
+        this.trackId = trackId;
+    }
+
+
+    public long getTrackId() {
+        return trackId;
+    }
+
+    public void setTrackId(long trackId) {
+        this.trackId = trackId;
     }
 
     public long getPlayHistoryObjectId() {
@@ -23,14 +39,6 @@ public class PlayHistoryObject {
     public void setPlayHistoryObjectId(long playHistoryObjectId) {
         this.playHistoryObjectId = playHistoryObjectId;
     }
-
-//    public Track getTrack() {
-//        return track;
-//    }
-//
-//    public void setTrack(Track track) {
-//        this.track = track;
-//    }
 
     public String getObjectContextType() {
         return objectContextType;
@@ -43,11 +51,12 @@ public class PlayHistoryObject {
 
     public static PlayHistoryObject[] populateData() {
         return new PlayHistoryObject[] {
-                new PlayHistoryObject(1, "title1"),
-                new PlayHistoryObject(2, "title2"),
-                new PlayHistoryObject(3, "title3"),
-                new PlayHistoryObject(4, "title4"),
-                new PlayHistoryObject(5, "title5")
+                new PlayHistoryObject("title1", 1),
+                new PlayHistoryObject("title2",2),
+                new PlayHistoryObject("title3",3),
+                new PlayHistoryObject("title4",4),
+                new PlayHistoryObject("title5",5)
         };
     }
 }
+

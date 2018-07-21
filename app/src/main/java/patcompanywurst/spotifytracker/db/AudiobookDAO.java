@@ -3,12 +3,15 @@ package patcompanywurst.spotifytracker.db;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Transaction;
 
 import java.util.List;
 
-import patcompanywurst.spotifytracker.db.Entity.Artist;
+import patcompanywurst.spotifytracker.db.Entity.Album;
+import patcompanywurst.spotifytracker.db.Entity.AlbumWithAllTracks;
 import patcompanywurst.spotifytracker.db.Entity.PlayHistoryObject;
 import patcompanywurst.spotifytracker.db.Entity.Track;
+import patcompanywurst.spotifytracker.db.Entity.TrackWithAllPlayHistoryObjects;
 
 import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 
@@ -16,22 +19,30 @@ import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 public interface AudiobookDAO {
 
     @Insert(onConflict = REPLACE)
-    void addArtist(Artist artist);
+    void addAlbum(Album[] album);
 
     @Insert(onConflict = REPLACE)
     void addPlayHistoryObject(PlayHistoryObject[] playHistoryObject);
 
     @Insert(onConflict = REPLACE)
-    void addTrack(Track track);
+    void addTrack(Track[] track);
 
-    @Query("SELECT * FROM Artist")
-    List<Artist> getArtist();
+    @Query("SELECT * FROM Album")
+    List<Album> getAlbum();
 
     @Query("SELECT * FROM Track")
     List<Track> getTrack();
 
     @Query("SELECT * FROM PlayHistoryObject")
     List<PlayHistoryObject> getPlayHistoryObject();
+
+    @Transaction
+    @Query("SELECT * FROM Album")
+    public List<AlbumWithAllTracks> loadAlbumWithTracks();
+
+    @Transaction
+    @Query("SELECT * FROM Track")
+    public List<TrackWithAllPlayHistoryObjects> loadTracksWithPlayHistoryObjects();
 
 
 }
