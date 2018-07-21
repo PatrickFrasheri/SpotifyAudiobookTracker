@@ -4,18 +4,17 @@ import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
-import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
 import java.util.concurrent.Executors;
 
-import patcompanywurst.spotifytracker.db.Entity.Artist;
+import patcompanywurst.spotifytracker.db.Entity.Album;
 import patcompanywurst.spotifytracker.db.Entity.PlayHistoryObject;
 import patcompanywurst.spotifytracker.db.Entity.SpotifyCredentials;
 import patcompanywurst.spotifytracker.db.Entity.Track;
 
-@Database(entities = {Artist.class, Track.class, PlayHistoryObject.class, SpotifyCredentials.class}, version =1, exportSchema = false)
+@Database(entities = {Album.class,Track.class, PlayHistoryObject.class, SpotifyCredentials.class}, version =1, exportSchema = false)
 public abstract class AudiobookDatabase extends RoomDatabase {
 
     public abstract AudiobookDAO audiobookDAO();
@@ -43,6 +42,9 @@ public abstract class AudiobookDatabase extends RoomDatabase {
                             @Override
                             public void run() {
                                 getInstance(context).audiobookDAO().addPlayHistoryObject(PlayHistoryObject.populateData());
+                                getInstance(context).audiobookDAO().addTrack(Track.populateData());
+                                getInstance(context).audiobookDAO().addAlbum(Album.populateData());
+
                             }
                         });
                     }

@@ -11,8 +11,10 @@ import java.lang.ref.WeakReference;
 import java.util.List;
 
 import patcompanywurst.spotifytracker.db.AudiobookDatabase;
+import patcompanywurst.spotifytracker.db.Entity.Album;
 import patcompanywurst.spotifytracker.db.Entity.PlayHistoryObject;
 import patcompanywurst.spotifytracker.db.Entity.SpotifyCredentials;
+import patcompanywurst.spotifytracker.db.Entity.Track;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -72,12 +74,18 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            List<PlayHistoryObject> playHistoryObjects = database.audiobookDAO().getPlayHistoryObject();
+            List<PlayHistoryObject> playHistoryObject = database.audiobookDAO().getPlayHistoryObject();
+            List<Album> albums = database.audiobookDAO().getAlbum();
+            List<Track> tracks = database.audiobookDAO().getTrack();
+
 
             Log.i(TAG, "Printing history objects");
 
-            for (PlayHistoryObject object : playHistoryObjects)
+            for (PlayHistoryObject object : playHistoryObject)
                 Log.i(TAG, String.format("Play History ID: %d", object.getPlayHistoryObjectId()));
+
+            for (Album object : albums)
+                Log.i(TAG,String.format("Album Name: %s", object.getName()));
 
             return null;
         }
