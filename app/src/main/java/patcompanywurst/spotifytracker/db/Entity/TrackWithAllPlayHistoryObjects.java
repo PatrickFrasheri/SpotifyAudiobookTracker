@@ -10,7 +10,7 @@ public class TrackWithAllPlayHistoryObjects {
     @Embedded
     public Track track;
 
-    @Relation(parentColumn = "trackId", entityColumn = "trackId", entity = PlayHistoryObject.class)
+    @Relation(parentColumn = "id", entityColumn = "trackId", entity = PlayHistoryObject.class)
     public List<PlayHistoryObject> playHistoryObject;
 
 

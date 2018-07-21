@@ -3,19 +3,20 @@ package patcompanywurst.spotifytracker.db.Entity;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.media.Image;
+import android.support.annotation.NonNull;
 
 import java.util.List;
 
 @Entity
 public class Album {
-    @PrimaryKey(autoGenerate = true)
-    private long albumId;
+
+    @PrimaryKey
+    @NonNull
+    private String id;
 
     private String artist;
 
     private String href;
-
-    private String spotifyId;
 
     private String image;
 
@@ -23,12 +24,20 @@ public class Album {
 
     private String uri;
 
-    public Album(String href, String spotifyId, String image, String name, String uri) {
+    public Album(String id, String href, String image, String name, String uri) {
+        this.id = id;
         this.href = href;
-        this.spotifyId = spotifyId;
         this.image = image;
         this.name = name;
         this.uri = uri;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getArtist() {
@@ -39,28 +48,12 @@ public class Album {
         this.artist = artist;
     }
 
-    public long getAlbumId() {
-        return albumId;
-    }
-
-    public void setAlbumId(long albumId) {
-        this.albumId = albumId;
-    }
-
     public String getHref() {
         return href;
     }
 
     public void setHref(String href) {
         this.href = href;
-    }
-
-    public String getSpotifyId() {
-        return spotifyId;
-    }
-
-    public void setSpotifyId(String spotifyId) {
-        this.spotifyId = spotifyId;
     }
 
     public String getImage() {
@@ -86,13 +79,13 @@ public class Album {
     public void setUri(String uri) {
         this.uri = uri;
     }
-    public static Album[] populateData(){
-        return new Album[]{
-                new Album("","0sNOF9WDwhWunNAHPD3Baj","https://i.scdn.co/image/07c323340e03e25a8e5dd5b9a8ec72b69c50089d","She's So Unusual", "spotify:artist:2BTZIqw0ntH9MvilQ3ewNY"),
-                new Album("","0sNOF9WDwhWunNAHPD3Baj","https://i.scdn.co/image/07c323340e03e25a8e5dd5b9a8ec72b69c50089d","She's So Unusual", "spotify:artist:2BTZIqw0ntH9MvilQ3ewNY"),
-                new Album("","0sNOF9WDwhWunNAHPD3Baj","https://i.scdn.co/image/07c323340e03e25a8e5dd5b9a8ec72b69c50089d","She's So Unusual", "spotify:artist:2BTZIqw0ntH9MvilQ3ewNY"),
-                new Album("","0sNOF9WDwhWunNAHPD3Baj","https://i.scdn.co/image/07c323340e03e25a8e5dd5b9a8ec72b69c50089d","She's So Unusual", "spotify:artist:2BTZIqw0ntH9MvilQ3ewNY"),
-                new Album("","0sNOF9WDwhWunNAHPD3Baj","https://i.scdn.co/image/07c323340e03e25a8e5dd5b9a8ec72b69c50089d","She's So Unusual", "spotify:artist:2BTZIqw0ntH9MvilQ3ewNY")
-        };
-    }
+//    public static Album[] populateData(){
+//        return new Album[]{
+//                new Album("","0sNOF9WDwhWunNAHPD3Baj","https://i.scdn.co/image/07c323340e03e25a8e5dd5b9a8ec72b69c50089d","She's So Unusual", "spotify:artist:2BTZIqw0ntH9MvilQ3ewNY"),
+//                new Album("","0sNOF9WDwhWunNAHPD3Baj","https://i.scdn.co/image/07c323340e03e25a8e5dd5b9a8ec72b69c50089d","She's So Unusual", "spotify:artist:2BTZIqw0ntH9MvilQ3ewNY"),
+//                new Album("","0sNOF9WDwhWunNAHPD3Baj","https://i.scdn.co/image/07c323340e03e25a8e5dd5b9a8ec72b69c50089d","She's So Unusual", "spotify:artist:2BTZIqw0ntH9MvilQ3ewNY"),
+//                new Album("","0sNOF9WDwhWunNAHPD3Baj","https://i.scdn.co/image/07c323340e03e25a8e5dd5b9a8ec72b69c50089d","She's So Unusual", "spotify:artist:2BTZIqw0ntH9MvilQ3ewNY"),
+//                new Album("","0sNOF9WDwhWunNAHPD3Baj","https://i.scdn.co/image/07c323340e03e25a8e5dd5b9a8ec72b69c50089d","She's So Unusual", "spotify:artist:2BTZIqw0ntH9MvilQ3ewNY")
+//        };
+//    }
 }

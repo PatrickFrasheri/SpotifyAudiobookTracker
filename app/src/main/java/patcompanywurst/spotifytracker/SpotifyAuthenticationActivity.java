@@ -41,7 +41,7 @@ public class SpotifyAuthenticationActivity extends AppCompatActivity {
         AuthenticationRequest.Builder builder;
         builder = new AuthenticationRequest.Builder(CLIENT_ID, AuthenticationResponse.Type.TOKEN, REDIRECT_URI);
 
-        builder.setScopes(new String[]{"streaming"});
+        builder.setScopes(new String[]{"streaming", "user-read-recently-played"});
         AuthenticationRequest request = builder.build();
 
         AuthenticationClient.openLoginInBrowser(this, request);
@@ -120,6 +120,9 @@ public class SpotifyAuthenticationActivity extends AppCompatActivity {
             AudiobookDatabase database = AudiobookDatabase
                     .getInstance(weakActivity.get().getApplicationContext());
 
+            // Delete old credentials
+            database.spotifyCredentialsDao().deleteCredentials();
+            // Insert new credentials
             database.spotifyCredentialsDao().insert(credentials);
 
             return null;

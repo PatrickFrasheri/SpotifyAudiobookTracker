@@ -8,6 +8,6 @@ import java.util.List;
 public class AlbumWithAllTracks {
     @Embedded
     public Album album;
-    @Relation(parentColumn = "albumId",entityColumn = "albumId",entity = Track.class)
+    @Relation(parentColumn = "id",entityColumn = "albumId",entity = Track.class)
     public List<Track> tracks;
 }

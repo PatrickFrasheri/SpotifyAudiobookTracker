@@ -41,9 +41,9 @@ public abstract class AudiobookDatabase extends RoomDatabase {
                         Executors.newSingleThreadScheduledExecutor().execute(new Runnable() {
                             @Override
                             public void run() {
-                                getInstance(context).audiobookDAO().addPlayHistoryObject(PlayHistoryObject.populateData());
-                                getInstance(context).audiobookDAO().addTrack(Track.populateData());
-                                getInstance(context).audiobookDAO().addAlbum(Album.populateData());
+//                                getInstance(context).audiobookDAO().addPlayHistoryObject(PlayHistoryObject.populateData());
+//                                getInstance(context).audiobookDAO().addTrack(Track.populateData());
+//                                getInstance(context).audiobookDAO().addAlbum(Album.populateData());
 
                             }
                         });
