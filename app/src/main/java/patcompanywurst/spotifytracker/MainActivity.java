@@ -24,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        
+
         database = AudiobookDatabase.getInstance(getApplicationContext());
 
         Log.i(TAG, "Starting async history object fetch");

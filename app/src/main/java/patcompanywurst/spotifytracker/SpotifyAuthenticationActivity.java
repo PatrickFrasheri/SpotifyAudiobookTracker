@@ -38,8 +38,8 @@ public class SpotifyAuthenticationActivity extends AppCompatActivity {
         database = Room.databaseBuilder(getApplicationContext(),
                 AudiobookDatabase.class, "audiobook").build();
 
-        AuthenticationRequest.Builder builder =
-                new AuthenticationRequest.Builder(CLIENT_ID, AuthenticationResponse.Type.TOKEN, REDIRECT_URI);
+        AuthenticationRequest.Builder builder;
+        builder = new AuthenticationRequest.Builder(CLIENT_ID, AuthenticationResponse.Type.TOKEN, REDIRECT_URI);
 
         builder.setScopes(new String[]{"streaming"});
         AuthenticationRequest request = builder.build();
