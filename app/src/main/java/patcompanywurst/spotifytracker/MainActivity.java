@@ -25,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
         Log.i(TAG, "Starting async history object fetch");
         new DatabaseAsync().execute();
 
+    }
+
     private class DatabaseAsync extends AsyncTask<Void, Void, Void> {
 
         @Override
