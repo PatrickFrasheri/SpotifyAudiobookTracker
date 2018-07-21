@@ -21,7 +21,7 @@ public abstract class AudiobookDatabase extends RoomDatabase {
 
     private static AudiobookDatabase INSTANCE;
 
-    private synchronized static AudiobookDatabase getInstance(Context context) {
+    public synchronized static AudiobookDatabase getInstance(Context context) {
         if (INSTANCE == null) {
             INSTANCE = buildDatabase(context);
         }
