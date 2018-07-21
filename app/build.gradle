@@ -29,4 +29,5 @@ dependencies {
 
     implementation "android.arch.persistence.room:runtime:$room_version"
     annotationProcessor "android.arch.persistence.room:compiler:$room_version"
+    implementation 'com.spotify.android:auth:1.1.0'
 }

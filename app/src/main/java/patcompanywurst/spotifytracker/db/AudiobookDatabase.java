@@ -12,12 +12,15 @@ import java.util.concurrent.Executors;
 
 import patcompanywurst.spotifytracker.db.Entity.Artist;
 import patcompanywurst.spotifytracker.db.Entity.PlayHistoryObject;
+import patcompanywurst.spotifytracker.db.Entity.SpotifyCredentials;
 import patcompanywurst.spotifytracker.db.Entity.Track;
 
-@Database(entities = {Artist.class, Track.class, PlayHistoryObject.class}, version =1, exportSchema = false)
+@Database(entities = {Artist.class, Track.class, PlayHistoryObject.class, SpotifyCredentials.class}, version =1, exportSchema = false)
 public abstract class AudiobookDatabase extends RoomDatabase {
 
     public abstract AudiobookDAO audiobookDAO();
+
+    public abstract SpotifyCredentialsDao spotifyCredentialsDao();
 
     private static AudiobookDatabase INSTANCE;
 
@@ -27,6 +30,7 @@ public abstract class AudiobookDatabase extends RoomDatabase {
         }
         return INSTANCE;
     }
+
     private static AudiobookDatabase buildDatabase(final Context context) {
         return Room.databaseBuilder(context,
                 AudiobookDatabase.class,
@@ -45,4 +49,5 @@ public abstract class AudiobookDatabase extends RoomDatabase {
                 })
                 .build();
     }
+
 }
