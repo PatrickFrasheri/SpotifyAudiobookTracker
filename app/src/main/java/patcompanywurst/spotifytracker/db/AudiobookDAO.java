@@ -19,7 +19,7 @@ public interface AudiobookDAO {
     void addArtist(Artist artist);
 
     @Insert(onConflict = REPLACE)
-    void addPlayHistoryObject(PlayHistoryObject playHistoryObject);
+    void addPlayHistoryObject(PlayHistoryObject[] playHistoryObject);
 
     @Insert(onConflict = REPLACE)
     void addTrack(Track track);
