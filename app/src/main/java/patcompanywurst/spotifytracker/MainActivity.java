@@ -294,12 +294,15 @@ public class MainActivity extends AppCompatActivity implements SpotifyPlayer.Not
 
             int k = 0;
             Track[] fullTrackArray = new Track[fullTracks.size()];
-            Map<String, Album> albumMap = new HashMap<String, Album>();
+//            Map<String, Album> albumMap = new HashMap<String, Album>();
             for (Track track : fullTracks) {
 //                Track track = trackResponse.getTrack();
 //                if (albumMap.get(track.getAlbum().getId()) == null && track.getAlbum() != null)
 //                    albumMap.put(track.getAlbum().getId(), track.getAlbum());
-                database.audiobookDAO().addAlbum(track.getAlbum());
+                Album album = track.getAlbum();
+                album.setImage(album.getImages().get(0).getUrl());
+                Log.i(TAG , "Album image: " + album.getImage());
+                database.audiobookDAO().addAlbum(album);
 
                 track.setAlbumId(track.getAlbum().getId());
                 Log.d(TAG, String.format("Full Track: %s - %s (Album: %s)", track.getId(), track.getName(), track.getAlbumId()));
