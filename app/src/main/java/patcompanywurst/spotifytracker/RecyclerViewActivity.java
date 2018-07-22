@@ -13,14 +13,15 @@ import java.util.List;
 
 import patcompanywurst.spotifytracker.db.AudiobookDatabase;
 import patcompanywurst.spotifytracker.db.Entity.Album;
+import patcompanywurst.spotifytracker.db.Entity.AlbumWithAllTracks;
 import patcompanywurst.spotifytracker.db.Entity.Track;
 
 import static android.content.ContentValues.TAG;
 import static java.lang.Thread.sleep;
 
 public class RecyclerViewActivity extends Activity{
-    public List<Album> albumList = new ArrayList<>();
-    public List<Track> trackList = new ArrayList<>();
+    public List<AlbumWithAllTracks> albumList = new ArrayList<>();
+//    public List<Track> trackList = new ArrayList<>();
     private RecyclerView mRecyclerView;
     private RecyclerView.Adapter audiobookAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
@@ -47,7 +48,7 @@ public class RecyclerViewActivity extends Activity{
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        audiobookAdapter = new AudiobookAdapter((ArrayList<Album>) albumList);
+        audiobookAdapter = new AudiobookAdapter((ArrayList<AlbumWithAllTracks>) albumList);
         mRecyclerView.setAdapter(audiobookAdapter);
     }
 
@@ -62,10 +63,10 @@ public class RecyclerViewActivity extends Activity{
             AudiobookDatabase database = AudiobookDatabase
                     .getInstance(weakMainActivity.get().getApplicationContext());
             //Hole mir die Album und Track Daten aus der Datenbank
-            albumList = database.audiobookDAO().getAlbum();
-            trackList = database.audiobookDAO().getTracks();
-            for(Album o : albumList){
-                Log.i(TAG, "doInBackground: " + o.getName());
+            albumList = database.audiobookDAO().loadAlbumWithTracks();
+//            trackList = database.audiobookDAO().getTracks();
+            for(AlbumWithAllTracks o : albumList){
+                Log.i(TAG, "doInBackground: " + o.getAlbum().getName());
             }
             return null;
         }

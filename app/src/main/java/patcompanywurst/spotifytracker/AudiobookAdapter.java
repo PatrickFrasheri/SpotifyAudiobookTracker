@@ -13,6 +13,7 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import patcompanywurst.spotifytracker.db.Entity.Album;
+import patcompanywurst.spotifytracker.db.Entity.AlbumWithAllTracks;
 
 /**
  * Created by sdonath on 16.06.2017.
@@ -21,9 +22,9 @@ import patcompanywurst.spotifytracker.db.Entity.Album;
 public class AudiobookAdapter extends RecyclerView.Adapter<AudiobookAdapter.ViewHolder> {
 
     private static final String TAG = AudiobookAdapter.class.getSimpleName();
-    private ArrayList<Album> albumArrayList;
+    private ArrayList<AlbumWithAllTracks> albumArrayList;
 
-    public AudiobookAdapter(ArrayList<Album> albumArrayList){
+    public AudiobookAdapter(ArrayList<AlbumWithAllTracks> albumArrayList){
         this.albumArrayList = albumArrayList;
     }
 
@@ -49,12 +50,12 @@ public class AudiobookAdapter extends RecyclerView.Adapter<AudiobookAdapter.View
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        final Album album = albumArrayList.get(position);
+        final AlbumWithAllTracks album = albumArrayList.get(position);
 
-        holder.albumText.setText(album.getName());
+        holder.albumText.setText(album.getAlbum().getName());
 
         Picasso.with(holder.albumImage.getContext())
-                .load(album.getImage())
+                .load(album.getAlbum().getImage())
                 .resize(400, 800)
                 .centerCrop()
                 .into(holder.albumImage);

@@ -10,4 +10,20 @@ public class AlbumWithAllTracks {
     public Album album;
     @Relation(parentColumn = "id",entityColumn = "albumId",entity = Track.class)
     public List<Track> tracks;
+
+    public Album getAlbum() {
+        return album;
+    }
+
+    public void setAlbum(Album album) {
+        this.album = album;
+    }
+
+    public List<Track> getTracks() {
+        return tracks;
+    }
+
+    public void setTracks(List<Track> tracks) {
+        this.tracks = tracks;
+    }
 }
