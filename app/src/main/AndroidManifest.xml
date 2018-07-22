@@ -41,6 +41,8 @@
                     android:scheme="spotifyaudiobooktracker" />
             </intent-filter>
         </activity>
+        <activity android:name=".RecyclerViewActivity" >
+        </activity>
     </application>
 
 </manifest>

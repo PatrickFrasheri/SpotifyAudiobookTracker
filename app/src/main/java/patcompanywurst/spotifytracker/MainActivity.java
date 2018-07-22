@@ -14,6 +14,7 @@ import com.spotify.sdk.android.player.PlayerEvent;
 import com.spotify.sdk.android.player.Spotify;
 import com.spotify.sdk.android.player.SpotifyPlayer;
 
+import java.lang.ref.Reference;
 import java.lang.ref.WeakReference;
 import java.util.List;
 
@@ -135,6 +136,7 @@ public class MainActivity extends AppCompatActivity implements SpotifyPlayer.Not
 
         private final WeakReference<Activity> weakMainActivity;
 
+
         FetchData(Activity activity) {
             this.weakMainActivity = new WeakReference<>(activity);
         }
@@ -217,6 +219,13 @@ public class MainActivity extends AppCompatActivity implements SpotifyPlayer.Not
 //                Log.i(TAG, String.format("Pager Track: %s - %s", track.name, track.album));
 
             return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void v) {
+            super.onPostExecute(v);
+            Intent intent = new Intent(weakMainActivity.get().getApplicationContext(),RecyclerViewActivity.class);
+            weakMainActivity.get().startActivity(intent);
         }
     }
 
