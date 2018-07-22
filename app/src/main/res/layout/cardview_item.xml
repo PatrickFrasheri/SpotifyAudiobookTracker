@@ -68,11 +68,11 @@
                     android:layout_margin="2.5dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
                     android:layout_below="@+id/album_name"
                     android:text="Gehe zu Track"
-                    android:layout_marginLeft="200dp"
                     android:layout_centerHorizontal="true"
-                    android:layout_alignParentBottom="true"
+
                     android:textColor="@color/colorPrimary"
                     android:textSize="10sp"/>
             </RelativeLayout>
