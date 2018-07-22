@@ -5,69 +5,77 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="16dp"
-    android:weightSum="1">
+    android:weightSum="1"
+    android:background="#607D8B">
+
 
     <android.support.v7.widget.CardView
-        android:layout_width="wrap_content"
-        android:layout_height="200dp"
-        android:layout_marginBottom="15dp"
-        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="2.5dp"
+        android:layout_marginTop="2.5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+
         card_view:cardBackgroundColor="#ffffff"
         card_view:cardCornerRadius="10dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <ImageView
                 android:id="@+id/album_image"
-                android:layout_width="100dp"
+                android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_gravity="center_horizontal"
                 android:scaleType="fitXY" />
 
-            <TextView
-                android:id="@+id/track_name"
-                style="@style/TextAppearance.AppCompat.Small"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignRight="@+id/album_image"
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_toRightOf="@+id/album_image"
+                android:gravity="center" >
 
-                android:layout_gravity="bottom"
-                android:fontFamily="serif"
+                <TextView
+                    android:id="@+id/track_name"
+                    style="@style/TextAppearance.AppCompat.Light.Widget.PopupMenu.Small"
+                    android:textSize="13sp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
 
-                android:textAlignment="center"
-                tools:text="Album + Name" />
+                    android:layout_centerHorizontal="true"
+                    android:fontFamily="serif"
 
-            <TextView
-                android:id="@+id/album_name"
-                style="@style/TextAppearance.AppCompat.Light.Widget.PopupMenu.Small"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_below="@id/track_name"
-                android:layout_alignParentStart="true"
-                android:layout_alignRight="@+id/album_image"
+                    android:textAlignment="center"
+                    tools:text="Album + Name" />
 
-                android:layout_gravity="right"
-                android:fontFamily="serif"
-                tools:text="Album + Name" />
-            <Button
-                android:id="@+id/goto_track"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/album_image"
-                android:text="Gehe zu Track"
-                android:layout_gravity="right"
-                android:layout_centerHorizontal="true"
-                android:background="@color/colorPrimary"
-                android:textColor="@color/colorPrimary"
-                android:textSize="10sp"/>
+                <TextView
+                    android:id="@+id/album_name"
+                    android:textSize="10sp"
+                    style="@style/TextAppearance.AppCompat.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/track_name"
+                    android:textAlignment="center"
+                    android:layout_centerHorizontal="true"
+                    android:fontFamily="serif"
+                    tools:text="Album + Name" />
+                <Button
+                    android:id="@+id/goto_track"
+                    android:layout_margin="2.5dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/album_name"
+                    android:text="Gehe zu Track"
+                    android:layout_gravity="right"
+                    android:layout_marginLeft="200dp"
+                    android:layout_centerHorizontal="true"
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="10sp"/>
+            </RelativeLayout>
 
         </RelativeLayout>
 

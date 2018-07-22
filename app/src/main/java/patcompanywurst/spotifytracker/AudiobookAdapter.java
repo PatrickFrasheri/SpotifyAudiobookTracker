@@ -83,7 +83,8 @@ public class AudiobookAdapter extends RecyclerView.Adapter<AudiobookAdapter.View
         holder.gotoTrack.setOnClickListener(a);
         Picasso.with(holder.albumImage.getContext())
                 .load(album.getAlbum().getImage())
-                .resize(200, 200)
+                .resize(300,
+                        300)
                 .centerCrop()
                 .into(holder.albumImage);
 
