@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.spotify.sdk.android.player.Config;
@@ -14,21 +15,23 @@ import com.spotify.sdk.android.player.PlayerEvent;
 import com.spotify.sdk.android.player.Spotify;
 import com.spotify.sdk.android.player.SpotifyPlayer;
 
-import java.lang.ref.Reference;
+import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.util.LinkedList;
 import java.util.List;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
-import patcompanywurst.spotifytracker.api.entities.SpotifyTrack;
-import patcompanywurst.spotifytracker.api.entities.SpotifyTrackApiService;
+import patcompanywurst.spotifytracker.api.entities.SpotifyApiService;
+import patcompanywurst.spotifytracker.api.entities.SpotifyAudioFeaturesList;
+import patcompanywurst.spotifytracker.api.entities.SpotifyFullTrackList;
 import patcompanywurst.spotifytracker.api.entities.SpotifyTrackResponseList;
 import patcompanywurst.spotifytracker.api.entities.SpotifyTrackResponse;
 import patcompanywurst.spotifytracker.db.AudiobookDatabase;
+import patcompanywurst.spotifytracker.db.Entity.AudioFeature;
 import patcompanywurst.spotifytracker.db.Entity.SpotifyCredentials;
+import patcompanywurst.spotifytracker.db.Entity.Track;
 import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -136,6 +139,7 @@ public class MainActivity extends AppCompatActivity implements SpotifyPlayer.Not
 
         private final WeakReference<Activity> weakMainActivity;
 
+        private AudiobookDatabase database;
 
         FetchData(Activity activity) {
             this.weakMainActivity = new WeakReference<>(activity);
@@ -143,7 +147,7 @@ public class MainActivity extends AppCompatActivity implements SpotifyPlayer.Not
 
         @Override
         protected Void doInBackground(Void... voids) {
-            AudiobookDatabase database = AudiobookDatabase
+            database = AudiobookDatabase
                     .getInstance(weakMainActivity.get().getApplicationContext());
 
             SpotifyCredentials credentials = database.spotifyCredentialsDao().getCredentials();
@@ -160,63 +164,157 @@ public class MainActivity extends AppCompatActivity implements SpotifyPlayer.Not
 
                 retrofit = new Retrofit.Builder()
                         .baseUrl(BASE_URL)
-                        .client(client)
+//                        .client(client)
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
             }
 
-            SpotifyTrackApiService movieApiService = retrofit.create(SpotifyTrackApiService.class);
-            Call<SpotifyTrackResponseList> call = movieApiService
-                    .getRecentlyPlayed(String.format("Bearer %s", credentials.getAccessToken()));
+            SpotifyApiService spotifyApiService = retrofit.create(SpotifyApiService.class);
+            Call<SpotifyTrackResponseList> call = spotifyApiService
+                    .getRecentlyPlayed(String.format("Bearer %s", credentials.getAccessToken()), 50);
 
-            call.enqueue(new Callback<SpotifyTrackResponseList>() {
-                @Override
-                public void onResponse(Call<SpotifyTrackResponseList> call, Response<SpotifyTrackResponseList> response) {
-                    List<SpotifyTrackResponse> trackResponses = response.body().getItems();
-//                    recyclerView.setAdapter(new MoviesAdapter(movies, R.layout.list_item_movie, getApplicationContext()));
-                    Log.d(TAG, "Number of tracks received: " + trackResponses.size());
+//            call.enqueue(new Callback<SpotifyTrackResponseList>() {
+//                @Override
+//                public void onResponse(Call<SpotifyTrackResponseList> call, Response<SpotifyTrackResponseList> response) {
+//                    List<SpotifyTrackResponse> trackResponses = response.body().getItems();
+////                    recyclerView.setAdapter(new MoviesAdapter(movies, R.layout.list_item_movie, getApplicationContext()));
+//                    Log.d(TAG, "Number of tracks received: " + trackResponses.size());
+//
+//                    Track[] tracks = new Track[trackResponses.size()];
+//                    int i = 0;
+//                    for (SpotifyTrackResponse trackResponse : trackResponses) {
+//                        Track track = trackResponse.getTracks();
+//                        Log.d(TAG, String.format("Track: %s - %s", track.getId(), track.getName()));
+//                        tracks[i++] = trackResponse.getTracks();
+//                    }
+//
+//                    new AsyncTask<Track[], Void, Void>() {
+//
+//                        @Override
+//                        protected Void doInBackground(Track[]... tracks) {
+//
+//                            for (Track[] trackArray : tracks)
+//                                database.audiobookDAO().addTrack(trackArray);
+//                            return null;
+//                        }
+//                    };
+//                }
+//                @Override
+//                public void onFailure(Call<SpotifyTrackResponseList> call, Throwable throwable) {
+//                    Log.e(TAG, throwable.toString());
+//                }
+//            });
 
-                    for (SpotifyTrackResponse trackResponse : trackResponses) {
-                        SpotifyTrack track = trackResponse.getTrack();
-                        Log.d(TAG, String.format("Track: %s - %s", track.getId(), track.getName()));
-                    }
+            List<SpotifyTrackResponse> trackResponses = null;
+            try {
+                trackResponses = call.execute().body().getItems();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            if (trackResponses == null) {
+                Log.e(TAG, "Couldn't fetch track responses");
+                return null;
+            }
+
+            Log.d(TAG, "Number of tracks received: " + trackResponses.size());
+
+            Track[] tracks = new Track[trackResponses.size()];
+            LinkedList<String> trackIds = new LinkedList<String>();
+            int i = 0;
+            for (SpotifyTrackResponse trackResponse : trackResponses) {
+                Track track = trackResponse.getTrack();
+                Log.d(TAG, String.format("Track: %s - %s", track.getId(), track.getName()));
+                tracks[i++] = trackResponse.getTrack();
+                if (!trackIds.contains(track.getId()) && database.audiobookDAO().findTrack(track.getId()) == null)
+                    trackIds.add(track.getId());
+            }
+
+            database.audiobookDAO().addTrack(tracks);
+
+            String trackIdQueryString = TextUtils.join(",", trackIds);
+
+            Call<SpotifyAudioFeaturesList> audioFeaturesCall = spotifyApiService
+                .getAudioFeatures(String.format("Bearer %s", credentials.getAccessToken()), trackIdQueryString);
+
+            List<AudioFeature> audioFeatures = null;
+            try {
+                audioFeatures = audioFeaturesCall.execute().body().getItems();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            if (audioFeatures == null) {
+                Log.e(TAG, "Couldn't fetch audio feature responses");
+                return null;
+            }
+
+            Log.d(TAG, "Number of audio features received: " + audioFeatures.size());
+
+            // Empty Audio feature responses result in "audio_features: [ null ]" #majorfuckup
+            if (audioFeatures.size() > 1 || audioFeatures.get(0) != null) {
+                AudioFeature[] audioFeatureArray = new AudioFeature[audioFeatures.size()];
+
+                int j = 0;
+                for (AudioFeature audioFeature : audioFeatures) {
+                    audioFeatureArray[j++] = audioFeature;
+                    Log.d(TAG, String.format("AudioFeature: Speechiness %f", audioFeature.getSpeechiness()));
                 }
-                @Override
-                public void onFailure(Call<SpotifyTrackResponseList> call, Throwable throwable) {
-                    Log.e(TAG, throwable.toString());
-                }
-            });
 
-//            SpotifyApi api = new SpotifyApi();
-//            api.setAccessToken(credentials.getAccessToken());
+                database.audiobookDAO().addAudioFeatures(audioFeatureArray);
+            }
+
+            List<Track> simplifiedAudioBookTracks = database.audiobookDAO().getSimplifiedAudioBookTracks();
+            trackIds = new LinkedList<String>();
+            for (Track simplifiedAudioBookTrack : simplifiedAudioBookTracks) {
+                trackIds.add(simplifiedAudioBookTrack.getId());
+            }
+
+            trackIdQueryString = TextUtils.join(",", trackIds);
+
+            Call<SpotifyFullTrackList> tracksCall = spotifyApiService
+                    .getTracks(String.format("Bearer %s", credentials.getAccessToken()), trackIdQueryString);
+
+            List<Track> fullTracks = null;
+            try {
+                fullTracks = tracksCall.execute().body().getTracks();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            if (fullTracks == null) {
+                Log.e(TAG, "Couldn't fetch full tracks");
+                return null;
+            }
+
+            int k = 0;
+            Track[] fullTrackArray = new Track[fullTracks.size()];
+            for (Track track : fullTracks) {
+//                Track track = trackResponse.getTrack();
+                track.setAlbumId(track.getAlbum().getId());
+                Log.d(TAG, String.format("Full Track: %s - %s", track.getId(), track.getName()));
+                fullTrackArray[k++] = track;
+            }
+
+            database.audiobookDAO().addTrack(fullTrackArray);
+
+//            Call<SpotifyAlbumList> albumCall = spotifyApiService
+//                    .getAlbums(String.format("Bearer %s", credentials.getAccessToken()), albumIdQueryString);
 //
-//            SpotifyService service = api.getService();
+//            List<Album> albums = null;
+//            try {
+//                albums = albumCall.execute().body().getItems();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
 //
-//            kaaes.spotify.webapi.android.models.Album apiAlbum = service.getAlbum("2dIGnmEIy1WZIcZCFSj6i8");
+//            if (albums == null) {
+//                Log.e(TAG, "Couldn't fetch album responses");
+//                return null;
+//            }
 //
-//            Album album = new Album(apiAlbum.id,
-//                    apiAlbum.href,
-//                    apiAlbum.images.get(0).url,
-//                    apiAlbum.name,
-//                    apiAlbum.uri);
-//
-//            Album[] albums = new Album[1];
-//
-//            albums[0] = album;
-//
-//            database.audiobookDAO().addAlbum(albums);
-//
-//            Log.i(TAG, String.format("Album name: %s Artist: %s", apiAlbum.name, apiAlbum.artists.get(0)));
-//
-//            List<Album> fetchedAlbums = database.audiobookDAO().getAlbum();
-//
-//            Log.i(TAG, String.format("Found %d albums in database", fetchedAlbums.size()));
-//            for (Album a : fetchedAlbums)
-//                Log.i(TAG, String.format("Album name: %s", a.getName()));
-//
-//            Pager<Track> pager = service.getRecentlyPlayed();
-//            for (Track track : pager.items)
-//                Log.i(TAG, String.format("Pager Track: %s - %s", track.name, track.album));
+//            for (Album album : albums)
+//                Log.i(TAG, String.format("Album: %s", album.getName()));
 
             return null;
         }

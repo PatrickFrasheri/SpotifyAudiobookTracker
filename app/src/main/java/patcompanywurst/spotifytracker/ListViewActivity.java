@@ -1,13 +1,9 @@
 package patcompanywurst.spotifytracker;
 
 import android.app.Activity;
-import android.app.ListActivity;
-import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
@@ -16,7 +12,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import patcompanywurst.spotifytracker.db.AudiobookDatabase;
-import patcompanywurst.spotifytracker.db.Entity.SpotifyCredentials;
 import patcompanywurst.spotifytracker.db.Entity.Track;
 
 public class ListViewActivity extends AppCompatActivity {
@@ -52,7 +47,7 @@ public class ListViewActivity extends AppCompatActivity {
             AudiobookDatabase database = AudiobookDatabase
                     .getInstance(weakMainActivity.get().getApplicationContext());
 
-            return database.audiobookDAO().getTrack();
+            return database.audiobookDAO().getTracks();
             // Check if we have existing credentials
         }
 

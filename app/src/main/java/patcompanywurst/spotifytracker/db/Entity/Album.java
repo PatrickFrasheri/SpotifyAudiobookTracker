@@ -5,6 +5,8 @@ import android.arch.persistence.room.PrimaryKey;
 import android.media.Image;
 import android.support.annotation.NonNull;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 @Entity
@@ -12,16 +14,20 @@ public class Album {
 
     @PrimaryKey
     @NonNull
+    @SerializedName("id")
     private String id;
 
     private String artist;
 
+    @SerializedName("href")
     private String href;
 
     private String image;
 
+    @SerializedName("name")
     private String name;
 
+    @SerializedName("uri")
     private String uri;
 
     public Album(String id, String href, String image, String name, String uri) {

@@ -9,6 +9,7 @@ import java.util.List;
 
 import patcompanywurst.spotifytracker.db.Entity.Album;
 import patcompanywurst.spotifytracker.db.Entity.AlbumWithAllTracks;
+import patcompanywurst.spotifytracker.db.Entity.AudioFeature;
 import patcompanywurst.spotifytracker.db.Entity.PlayHistoryObject;
 import patcompanywurst.spotifytracker.db.Entity.Track;
 import patcompanywurst.spotifytracker.db.Entity.TrackWithAllPlayHistoryObjects;
@@ -19,10 +20,13 @@ import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 public interface AudiobookDAO {
 
     @Insert(onConflict = REPLACE)
-    void addAlbum(Album[] album);
+    void addAlbums(Album[] album);
 
     @Insert(onConflict = REPLACE)
-    void addPlayHistoryObject(PlayHistoryObject[] playHistoryObject);
+    void addPlayHistoryObjects(PlayHistoryObject[] playHistoryObject);
+
+    @Insert(onConflict = REPLACE)
+    void addAudioFeatures(AudioFeature[] audioFeatures);
 
     @Insert(onConflict = REPLACE)
     void addTrack(Track[] track);
@@ -31,7 +35,16 @@ public interface AudiobookDAO {
     List<Album> getAlbum();
 
     @Query("SELECT * FROM Track")
-    List<Track> getTrack();
+    List<Track> getTracks();
+
+    @Query("SELECT * FROM Track WHERE id LIKE :id")
+    Track findTrack(String id);
+
+    @Query("SELECT * FROM Track JOIN AudioFeature ON AudioFeature.id = Track.id WHERE AudioFeature.speechiness > 0.7")
+    List<Track> getAudioBookTracks();
+
+    @Query("SELECT * FROM Track JOIN AudioFeature ON AudioFeature.id = Track.id WHERE AudioFeature.speechiness > 0.7 AND albumId IS NULL")
+    List<Track> getSimplifiedAudioBookTracks();
 
     @Query("SELECT * FROM PlayHistoryObject")
     List<PlayHistoryObject> getPlayHistoryObject();
@@ -43,6 +56,5 @@ public interface AudiobookDAO {
     @Transaction
     @Query("SELECT * FROM Track")
     public List<TrackWithAllPlayHistoryObjects> loadTracksWithPlayHistoryObjects();
-
 
 }

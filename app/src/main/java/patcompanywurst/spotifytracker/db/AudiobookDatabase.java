@@ -10,11 +10,12 @@ import android.support.annotation.NonNull;
 import java.util.concurrent.Executors;
 
 import patcompanywurst.spotifytracker.db.Entity.Album;
+import patcompanywurst.spotifytracker.db.Entity.AudioFeature;
 import patcompanywurst.spotifytracker.db.Entity.PlayHistoryObject;
 import patcompanywurst.spotifytracker.db.Entity.SpotifyCredentials;
 import patcompanywurst.spotifytracker.db.Entity.Track;
 
-@Database(entities = {Album.class,Track.class, PlayHistoryObject.class, SpotifyCredentials.class}, version =1, exportSchema = false)
+@Database(entities = {Album.class,Track.class, PlayHistoryObject.class, SpotifyCredentials.class, AudioFeature.class}, version =1, exportSchema = false)
 public abstract class AudiobookDatabase extends RoomDatabase {
 
     public abstract AudiobookDAO audiobookDAO();
@@ -41,9 +42,9 @@ public abstract class AudiobookDatabase extends RoomDatabase {
                         Executors.newSingleThreadScheduledExecutor().execute(new Runnable() {
                             @Override
                             public void run() {
-//                                getInstance(context).audiobookDAO().addPlayHistoryObject(PlayHistoryObject.populateData());
+//                                getInstance(context).audiobookDAO().addPlayHistoryObjects(PlayHistoryObject.populateData());
 //                                getInstance(context).audiobookDAO().addTrack(Track.populateData());
-//                                getInstance(context).audiobookDAO().addAlbum(Album.populateData());
+//                                getInstance(context).audiobookDAO().addAlbums(Album.populateData());
 
                             }
                         });

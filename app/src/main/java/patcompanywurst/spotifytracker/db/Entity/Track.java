@@ -3,9 +3,12 @@ package patcompanywurst.spotifytracker.db.Entity;
 import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Embedded;
 import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
 import android.arch.persistence.room.Relation;
 import android.support.annotation.NonNull;
+
+import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
@@ -14,24 +17,33 @@ public class Track {
 
     @PrimaryKey
     @NonNull
+    @SerializedName("id")
     private String id;
 
     private String albumId;
 
+    @SerializedName("album")
+    @Ignore
+    private Album album;
+
     private String artist;
 
+    @SerializedName("duration_ms")
     private int duration_ms;
 
+    @SerializedName("href")
     private String href;
 
-    private String spotifyId;
-
+    @SerializedName("name")
     private String name;
 
+    @SerializedName("track_number")
     private int track_number;
 
+    @SerializedName("type")
     private String type;
 
+    @SerializedName("uri")
     private String uri;
 
     private float speechiness;
@@ -40,13 +52,12 @@ public class Track {
         return speechiness;
     }
 
-    public Track(String id, String albumId, String artist, int duration_ms, String href, String spotifyId, String name, int track_number, String type, String uri, float speechiness) {
+    public Track(String id, String albumId, String artist, int duration_ms, String href, String name, int track_number, String type, String uri, float speechiness) {
         this.id = id;
         this.albumId = albumId;
         this.artist = artist;
         this.duration_ms = duration_ms;
         this.href = href;
-        this.spotifyId = spotifyId;
         this.name = name;
         this.track_number = track_number;
         this.type = type;
@@ -70,6 +81,14 @@ public class Track {
         this.albumId = albumId;
     }
 
+    public Album getAlbum() {
+        return album;
+    }
+
+    public void setAlbum(Album album) {
+        this.album = album;
+    }
+
     public void setSpeechiness(float speechiness) {
         this.speechiness = speechiness;
     }
@@ -88,14 +107,6 @@ public class Track {
 
     public void setHref(String href) {
         this.href = href;
-    }
-
-    public String getSpotifyId() {
-        return spotifyId;
-    }
-
-    public void setSpotifyId(String spotifyId) {
-        this.spotifyId = spotifyId;
     }
 
     public String getName() {
