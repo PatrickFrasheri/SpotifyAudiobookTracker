@@ -137,7 +137,8 @@ public class SpotifyAuthenticationActivity extends AppCompatActivity {
                     .get()
                     .startActivity(
                             new Intent(weakActivity.get().getApplicationContext(),
-                                    SpotifyAuthenticationActivity.class
+                                    //SpotifyAuthenticationActivity.class
+                                    MainActivity.class
                             ));
         }
 
