@@ -9,8 +9,8 @@
     android:weightSum="1">
 
     <android.support.v7.widget.CardView
-        android:layout_width="250dp"
-        android:layout_height="400dp"
+        android:layout_width="wrap_content"
+        android:layout_height="200dp"
         android:layout_marginBottom="15dp"
         android:layout_marginTop="15dp"
         card_view:cardBackgroundColor="#ffffff"
@@ -23,25 +23,51 @@
             <ImageView
                 android:id="@+id/album_image"
                 android:layout_width="100dp"
-                android:layout_height="200dp"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true"
+                android:layout_height="120dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
                 android:layout_gravity="center_horizontal"
                 android:scaleType="fitXY" />
 
             <TextView
-                android:id="@+id/album_name"
-                style="@style/TextAppearance.AppCompat.Medium"
+                android:id="@+id/track_name"
+                style="@style/TextAppearance.AppCompat.Small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentStart="true"
-                android:layout_below="@+id/album_image"
+                android:layout_alignRight="@+id/album_image"
+
                 android:layout_gravity="bottom"
                 android:fontFamily="serif"
 
                 android:textAlignment="center"
                 tools:text="Album + Name" />
+
+            <TextView
+                android:id="@+id/album_name"
+                style="@style/TextAppearance.AppCompat.Light.Widget.PopupMenu.Small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_below="@id/track_name"
+                android:layout_alignParentStart="true"
+                android:layout_alignRight="@+id/album_image"
+
+                android:layout_gravity="right"
+                android:fontFamily="serif"
+                tools:text="Album + Name" />
+            <Button
+                android:id="@+id/goto_track"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/album_image"
+                android:text="Gehe zu Track"
+                android:layout_gravity="right"
+                android:layout_centerHorizontal="true"
+                android:background="@color/colorPrimary"
+                android:textColor="@color/colorPrimary"
+                android:textSize="10sp"/>
 
         </RelativeLayout>
 

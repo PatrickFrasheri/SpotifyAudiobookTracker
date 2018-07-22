@@ -48,7 +48,7 @@ public class RecyclerViewActivity extends Activity{
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        audiobookAdapter = new AudiobookAdapter((ArrayList<AlbumWithAllTracks>) albumList);
+        audiobookAdapter = new AudiobookAdapter((ArrayList<AlbumWithAllTracks>) albumList, this);
         mRecyclerView.setAdapter(audiobookAdapter);
     }
 
@@ -64,9 +64,11 @@ public class RecyclerViewActivity extends Activity{
                     .getInstance(weakMainActivity.get().getApplicationContext());
             //Hole mir die Album und Track Daten aus der Datenbank
             albumList = database.audiobookDAO().loadAlbumWithTracks();
+
 //            trackList = database.audiobookDAO().getTracks();
             for(AlbumWithAllTracks o : albumList){
-                Log.i(TAG, "doInBackground: " + o.getAlbum().getName());
+                Track latestTrack = database.audiobookDAO().getLatestTrackForAlbumId(o.getAlbum().getId());
+                o.setLatestTrack(latestTrack);
             }
             return null;
         }

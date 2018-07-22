@@ -29,6 +29,9 @@ public interface AudiobookDAO {
     void addPlayHistoryObjects(PlayHistoryObject[] playHistoryObject);
 
     @Insert(onConflict = REPLACE)
+    void addAudioFeature(AudioFeature audioFeature);
+
+    @Insert(onConflict = REPLACE)
     void addAudioFeatures(AudioFeature[] audioFeatures);
 
     @Insert(onConflict = REPLACE)
@@ -54,6 +57,9 @@ public interface AudiobookDAO {
 
     @Query("SELECT * FROM PlayHistoryObject")
     List<PlayHistoryObject> getPlayHistoryObject();
+
+    @Query("SELECT * FROM Track WHERE albumId LIKE :albumId ORDER BY playedAt DESC LIMIT 1")
+    Track getLatestTrackForAlbumId(String albumId);
 
     @Transaction
     @Query("SELECT * FROM Album")

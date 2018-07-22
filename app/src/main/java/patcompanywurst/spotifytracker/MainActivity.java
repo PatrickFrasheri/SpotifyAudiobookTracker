@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.View;
 
 import com.spotify.sdk.android.player.Config;
 import com.spotify.sdk.android.player.Error;
@@ -258,15 +259,19 @@ public class MainActivity extends AppCompatActivity implements SpotifyPlayer.Not
 
             // Empty Audio feature responses result in "audio_features: [ null ]" #majorfuckup
             if (audioFeatures.size() > 1 || audioFeatures.get(0) != null) {
-                AudioFeature[] audioFeatureArray = new AudioFeature[audioFeatures.size()];
+//                AudioFeature[] audioFeatureArray = new AudioFeature[audioFeatures.size()];
 
-                int j = 0;
+//                int j = 0;
                 for (AudioFeature audioFeature : audioFeatures) {
-                    audioFeatureArray[j++] = audioFeature;
+                    if (audioFeature == null)
+                        continue;
+                    database.audiobookDAO().addAudioFeature(audioFeature);
+
+//                    audioFeatureArray[j++] = audioFeature;
                     Log.d(TAG, String.format("AudioFeature: Speechiness %f", audioFeature.getSpeechiness()));
                 }
 
-                database.audiobookDAO().addAudioFeatures(audioFeatureArray);
+//                database.audiobookDAO().addAudioFeatures(audioFeatureArray);
             }
 
             List<Track> simplifiedAudioBookTracks = database.audiobookDAO().getSimplifiedAudioBookTracks();
@@ -342,6 +347,7 @@ public class MainActivity extends AppCompatActivity implements SpotifyPlayer.Not
         @Override
         protected void onPostExecute(Void v) {
             super.onPostExecute(v);
+            weakMainActivity.get().findViewById(R.id.loadingPanel).setVisibility(View.GONE);
             Intent intent = new Intent(weakMainActivity.get().getApplicationContext(),RecyclerViewActivity.class);
             weakMainActivity.get().startActivity(intent);
         }
