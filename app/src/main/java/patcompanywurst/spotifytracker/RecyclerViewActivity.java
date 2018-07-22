@@ -63,7 +63,7 @@ public class RecyclerViewActivity extends Activity{
                     .getInstance(weakMainActivity.get().getApplicationContext());
             //Hole mir die Album und Track Daten aus der Datenbank
             albumList = database.audiobookDAO().getAlbum();
-            trackList = database.audiobookDAO().getTrack();
+            trackList = database.audiobookDAO().getTracks();
             for(Album o : albumList){
                 Log.i(TAG, "doInBackground: " + o.getName());
             }

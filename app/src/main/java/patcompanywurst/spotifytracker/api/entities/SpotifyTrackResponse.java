@@ -9,6 +9,9 @@ public class SpotifyTrackResponse {
     @SerializedName("track")
     private Track track;
 
+    @SerializedName("played_at")
+    private String playedAt;
+
     public SpotifyTrackResponse(Track track) {
         this.track = track;
     }
@@ -19,5 +22,13 @@ public class SpotifyTrackResponse {
 
     public void setTrack(Track track) {
         this.track = track;
+    }
+
+    public String getPlayedAt() {
+        return playedAt;
+    }
+
+    public void setPlayedAt(String playedAt) {
+        this.playedAt = playedAt;
     }
 }

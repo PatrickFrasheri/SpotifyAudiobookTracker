@@ -17,8 +17,11 @@ import com.spotify.sdk.android.player.SpotifyPlayer;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -28,6 +31,7 @@ import patcompanywurst.spotifytracker.api.entities.SpotifyFullTrackList;
 import patcompanywurst.spotifytracker.api.entities.SpotifyTrackResponseList;
 import patcompanywurst.spotifytracker.api.entities.SpotifyTrackResponse;
 import patcompanywurst.spotifytracker.db.AudiobookDatabase;
+import patcompanywurst.spotifytracker.db.Entity.Album;
 import patcompanywurst.spotifytracker.db.Entity.AudioFeature;
 import patcompanywurst.spotifytracker.db.Entity.SpotifyCredentials;
 import patcompanywurst.spotifytracker.db.Entity.Track;
@@ -164,7 +168,7 @@ public class MainActivity extends AppCompatActivity implements SpotifyPlayer.Not
 
                 retrofit = new Retrofit.Builder()
                         .baseUrl(BASE_URL)
-//                        .client(client)
+                        .client(client)
                         .addConverterFactory(GsonConverterFactory.create())
                         .build();
             }
@@ -225,12 +229,13 @@ public class MainActivity extends AppCompatActivity implements SpotifyPlayer.Not
             for (SpotifyTrackResponse trackResponse : trackResponses) {
                 Track track = trackResponse.getTrack();
                 Log.d(TAG, String.format("Track: %s - %s", track.getId(), track.getName()));
-                tracks[i++] = trackResponse.getTrack();
+                track.setPlayedAt(trackResponse.getPlayedAt());
+                tracks[i++] = track;
                 if (!trackIds.contains(track.getId()) && database.audiobookDAO().findTrack(track.getId()) == null)
                     trackIds.add(track.getId());
             }
 
-            database.audiobookDAO().addTrack(tracks);
+            database.audiobookDAO().addTracks(tracks);
 
             String trackIdQueryString = TextUtils.join(",", trackIds);
 
@@ -289,14 +294,26 @@ public class MainActivity extends AppCompatActivity implements SpotifyPlayer.Not
 
             int k = 0;
             Track[] fullTrackArray = new Track[fullTracks.size()];
+            Map<String, Album> albumMap = new HashMap<String, Album>();
             for (Track track : fullTracks) {
 //                Track track = trackResponse.getTrack();
+//                if (albumMap.get(track.getAlbum().getId()) == null && track.getAlbum() != null)
+//                    albumMap.put(track.getAlbum().getId(), track.getAlbum());
+                database.audiobookDAO().addAlbum(track.getAlbum());
+
                 track.setAlbumId(track.getAlbum().getId());
-                Log.d(TAG, String.format("Full Track: %s - %s", track.getId(), track.getName()));
+                Log.d(TAG, String.format("Full Track: %s - %s (Album: %s)", track.getId(), track.getName(), track.getAlbumId()));
                 fullTrackArray[k++] = track;
             }
 
-            database.audiobookDAO().addTrack(fullTrackArray);
+            database.audiobookDAO().addTracks(fullTrackArray);
+
+//            Album[] albumArray = new Album[albumMap.size()];
+//            int l = 0;
+//            for (Album album : albumMap.values())
+//                albumArray[l] = album;
+
+//            database.audiobookDAO().addAlbums(albumArray);
 
 //            Call<SpotifyAlbumList> albumCall = spotifyApiService
 //                    .getAlbums(String.format("Bearer %s", credentials.getAccessToken()), albumIdQueryString);

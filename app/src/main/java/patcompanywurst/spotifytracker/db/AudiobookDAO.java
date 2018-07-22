@@ -20,6 +20,9 @@ import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 public interface AudiobookDAO {
 
     @Insert(onConflict = REPLACE)
+    void addAlbum(Album album);
+
+    @Insert(onConflict = REPLACE)
     void addAlbums(Album[] album);
 
     @Insert(onConflict = REPLACE)
@@ -29,7 +32,10 @@ public interface AudiobookDAO {
     void addAudioFeatures(AudioFeature[] audioFeatures);
 
     @Insert(onConflict = REPLACE)
-    void addTrack(Track[] track);
+    void addTrack(Track track);
+
+    @Insert(onConflict = REPLACE)
+    void addTracks(Track[] track);
 
     @Query("SELECT * FROM Album")
     List<Album> getAlbum();

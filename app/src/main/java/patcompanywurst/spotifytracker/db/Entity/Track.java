@@ -52,6 +52,8 @@ public class Track {
         return speechiness;
     }
 
+    private String playedAt;
+
     public Track(String id, String albumId, String artist, int duration_ms, String href, String name, int track_number, String type, String uri, float speechiness) {
         this.id = id;
         this.albumId = albumId;
@@ -149,7 +151,15 @@ public class Track {
         this.artist = artist;
     }
 
-//    public static Track[] populateData(){
+    public String getPlayedAt() {
+        return playedAt;
+    }
+
+    public void setPlayedAt(String playedAt) {
+        this.playedAt = playedAt;
+    }
+
+    //    public static Track[] populateData(){
 //        return new Track[]{
 //                new Track((long)1.0,"",0,"href","1", "name 1", 1,"type 1","uri 1",(float)0.2),
 //                new Track((long)2.0,"",0,"href","2", "name 2", 2,"type 2","uri 2",(float)0.2),
