@@ -1,4 +1,4 @@
-package patcompanywurst.spotifytracker;
+package dohack2018.spotifytracker;
 
 import android.app.Activity;
 import android.os.AsyncTask;
@@ -11,8 +11,9 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 
-import patcompanywurst.spotifytracker.db.AudiobookDatabase;
-import patcompanywurst.spotifytracker.db.Entity.Track;
+import dohack2018.spotifytracker.db.AudiobookDatabase;
+import dohack2018.spotifytracker.db.Entity.Track;
+import patcompanywurst.spotifytracker.R;
 
 public class ListViewActivity extends AppCompatActivity {
 

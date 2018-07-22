@@ -1,4 +1,4 @@
-package patcompanywurst.spotifytracker.db.Entity;
+package dohack2018.spotifytracker.db.Entity;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;

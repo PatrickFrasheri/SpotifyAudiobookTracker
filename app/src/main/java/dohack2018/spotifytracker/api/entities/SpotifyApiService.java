@@ -1,4 +1,4 @@
-package patcompanywurst.spotifytracker.api.entities;
+package dohack2018.spotifytracker.api.entities;
 
 import retrofit2.Call;
 import retrofit2.http.GET;

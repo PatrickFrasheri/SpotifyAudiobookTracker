@@ -1,4 +1,4 @@
-package patcompanywurst.spotifytracker.db;
+package dohack2018.spotifytracker.db;
 
 import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Database;
@@ -9,11 +9,11 @@ import android.support.annotation.NonNull;
 
 import java.util.concurrent.Executors;
 
-import patcompanywurst.spotifytracker.db.Entity.Album;
-import patcompanywurst.spotifytracker.db.Entity.AudioFeature;
-import patcompanywurst.spotifytracker.db.Entity.PlayHistoryObject;
-import patcompanywurst.spotifytracker.db.Entity.SpotifyCredentials;
-import patcompanywurst.spotifytracker.db.Entity.Track;
+import dohack2018.spotifytracker.db.Entity.AudioFeature;
+import dohack2018.spotifytracker.db.Entity.SpotifyCredentials;
+import dohack2018.spotifytracker.db.Entity.Album;
+import dohack2018.spotifytracker.db.Entity.PlayHistoryObject;
+import dohack2018.spotifytracker.db.Entity.Track;
 
 @Database(entities = {Album.class,Track.class, PlayHistoryObject.class, SpotifyCredentials.class, AudioFeature.class}, version =1, exportSchema = false)
 public abstract class AudiobookDatabase extends RoomDatabase {

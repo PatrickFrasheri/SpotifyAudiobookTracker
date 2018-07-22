@@ -1,4 +1,4 @@
-package patcompanywurst.spotifytracker.db;
+package dohack2018.spotifytracker.db;
 
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
@@ -7,12 +7,12 @@ import android.arch.persistence.room.Transaction;
 
 import java.util.List;
 
-import patcompanywurst.spotifytracker.db.Entity.Album;
-import patcompanywurst.spotifytracker.db.Entity.AlbumWithAllTracks;
-import patcompanywurst.spotifytracker.db.Entity.AudioFeature;
-import patcompanywurst.spotifytracker.db.Entity.PlayHistoryObject;
-import patcompanywurst.spotifytracker.db.Entity.Track;
-import patcompanywurst.spotifytracker.db.Entity.TrackWithAllPlayHistoryObjects;
+import dohack2018.spotifytracker.db.Entity.AlbumWithAllTracks;
+import dohack2018.spotifytracker.db.Entity.AudioFeature;
+import dohack2018.spotifytracker.db.Entity.Track;
+import dohack2018.spotifytracker.db.Entity.TrackWithAllPlayHistoryObjects;
+import dohack2018.spotifytracker.db.Entity.Album;
+import dohack2018.spotifytracker.db.Entity.PlayHistoryObject;
 
 import static android.arch.persistence.room.OnConflictStrategy.REPLACE;
 

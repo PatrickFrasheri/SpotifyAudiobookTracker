@@ -1,4 +1,4 @@
-package patcompanywurst.spotifytracker;
+package dohack2018.spotifytracker;
 
 import android.app.Activity;
 import android.arch.persistence.room.Room;
@@ -15,8 +15,9 @@ import com.spotify.sdk.android.authentication.AuthenticationResponse;
 
 import java.lang.ref.WeakReference;
 
-import patcompanywurst.spotifytracker.db.AudiobookDatabase;
-import patcompanywurst.spotifytracker.db.Entity.SpotifyCredentials;
+import patcompanywurst.spotifytracker.R;
+import dohack2018.spotifytracker.db.AudiobookDatabase;
+import dohack2018.spotifytracker.db.Entity.SpotifyCredentials;
 
 public class SpotifyAuthenticationActivity extends AppCompatActivity {
 

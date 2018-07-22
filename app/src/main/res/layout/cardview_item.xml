@@ -70,9 +70,9 @@
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/album_name"
                     android:text="Gehe zu Track"
-                    android:layout_gravity="right"
                     android:layout_marginLeft="200dp"
                     android:layout_centerHorizontal="true"
+                    android:layout_alignParentBottom="true"
                     android:textColor="@color/colorPrimary"
                     android:textSize="10sp"/>
             </RelativeLayout>

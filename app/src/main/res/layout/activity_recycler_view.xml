@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RecyclerViewActivity">
+    tools:context="dohack2018.spotifytracker.RecyclerViewActivity">
 
     <android.support.v7.widget.RecyclerView
 

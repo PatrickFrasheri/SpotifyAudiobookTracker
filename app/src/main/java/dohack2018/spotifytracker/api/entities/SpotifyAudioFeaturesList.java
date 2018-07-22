@@ -1,11 +1,10 @@
-package patcompanywurst.spotifytracker.api.entities;
+package dohack2018.spotifytracker.api.entities;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-import patcompanywurst.spotifytracker.db.Entity.Album;
-import patcompanywurst.spotifytracker.db.Entity.AudioFeature;
+import dohack2018.spotifytracker.db.Entity.AudioFeature;
 
 public class SpotifyAudioFeaturesList {
 

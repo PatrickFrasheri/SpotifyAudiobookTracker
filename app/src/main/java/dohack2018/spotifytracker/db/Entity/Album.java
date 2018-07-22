@@ -1,16 +1,15 @@
-package patcompanywurst.spotifytracker.db.Entity;
+package dohack2018.spotifytracker.db.Entity;
 
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
-import android.media.Image;
 import android.support.annotation.NonNull;
 
 import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-import patcompanywurst.spotifytracker.api.entities.SpotifyImage;
+import dohack2018.spotifytracker.api.entities.SpotifyImage;
 
 @Entity
 public class Album {

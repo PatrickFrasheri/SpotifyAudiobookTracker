@@ -1,4 +1,4 @@
-package patcompanywurst.spotifytracker;
+package dohack2018.spotifytracker;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -18,24 +18,22 @@ import com.spotify.sdk.android.player.SpotifyPlayer;
 
 import java.io.IOException;
 import java.lang.ref.WeakReference;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
-import patcompanywurst.spotifytracker.api.entities.SpotifyApiService;
-import patcompanywurst.spotifytracker.api.entities.SpotifyAudioFeaturesList;
-import patcompanywurst.spotifytracker.api.entities.SpotifyFullTrackList;
-import patcompanywurst.spotifytracker.api.entities.SpotifyTrackResponseList;
-import patcompanywurst.spotifytracker.api.entities.SpotifyTrackResponse;
-import patcompanywurst.spotifytracker.db.AudiobookDatabase;
-import patcompanywurst.spotifytracker.db.Entity.Album;
-import patcompanywurst.spotifytracker.db.Entity.AudioFeature;
-import patcompanywurst.spotifytracker.db.Entity.SpotifyCredentials;
-import patcompanywurst.spotifytracker.db.Entity.Track;
+import patcompanywurst.spotifytracker.R;
+import dohack2018.spotifytracker.api.entities.SpotifyApiService;
+import dohack2018.spotifytracker.api.entities.SpotifyAudioFeaturesList;
+import dohack2018.spotifytracker.api.entities.SpotifyFullTrackList;
+import dohack2018.spotifytracker.api.entities.SpotifyTrackResponseList;
+import dohack2018.spotifytracker.api.entities.SpotifyTrackResponse;
+import dohack2018.spotifytracker.db.AudiobookDatabase;
+import dohack2018.spotifytracker.db.Entity.Album;
+import dohack2018.spotifytracker.db.Entity.AudioFeature;
+import dohack2018.spotifytracker.db.Entity.SpotifyCredentials;
+import dohack2018.spotifytracker.db.Entity.Track;
 import retrofit2.Call;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -116,6 +114,7 @@ public class MainActivity extends AppCompatActivity implements SpotifyPlayer.Not
                     Log.e("MainActivity", "Could not initialize player: " + throwable.getMessage());
                 }
             });
+
 
             return false;
         }

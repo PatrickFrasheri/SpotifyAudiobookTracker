@@ -1,4 +1,4 @@
-package patcompanywurst.spotifytracker;
+package dohack2018.spotifytracker;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -9,7 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -18,8 +17,8 @@ import com.squareup.picasso.Picasso;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 
-import patcompanywurst.spotifytracker.db.Entity.Album;
-import patcompanywurst.spotifytracker.db.Entity.AlbumWithAllTracks;
+import patcompanywurst.spotifytracker.R;
+import dohack2018.spotifytracker.db.Entity.AlbumWithAllTracks;
 
 /**
  * Created by sdonath on 16.06.2017.
